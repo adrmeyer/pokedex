@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Liste de Pokémon</h1>
+
+    <div class="row white-space"></div>
+
+    <table class="table table-striped" id="index_fiche">
+        <thead>
+        <tr>
+            <th>NationalID</th>
+            <th>Image</th>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Type(s)</th>
+            {#<th>Evolution</th>#}
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for fiche in fiches %}
+            <tr>
+                <td>#{{ "%03d"| format(fiche.nationalID) }}</td>
+                <td>{% if fiche.image is not null %}<img src="{{ asset(fiche.image.webPath) }}"
+                                                         alt="{{ fiche.image.alt }}" height="40"
+                                                         width="40" />{% endif %}</td>
+                <td>{{ fiche.name }}</td>
+                <td>{{ fiche.description|length > 100 ? fiche.description|slice(0, 100) ~ '...' : fiche.description }}</td>
+                <td>{% if fiche.types %}{{ fiche.types|join(', ') }}{% endif %}</td>
+                {#<td>{% if fiche.evolution is not null %} <a
+                        href="{{ path('fiche_show', { 'id': fiche.evolution.id}) }}">{{ fiche.evolution.name }} </a>{% endif %}
+                </td>#}
+                <td>
+                    <a href="{{ path('fiche_show', { 'id': fiche.id }) }}" class="btn btn-default action-button"><span
+                                class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                    {% if is_granted('ROLE_MODERATEUR') %}
+                        <a href="{{ path('fiche_edit', { 'id': fiche.id }) }}" class="btn btn-default action-button"><span
+                                    class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_granted('ROLE_MODERATEUR') %}
+        <div class="row">
+            <a class="btn btn-primary" href="{{ path('fiche_new') }}">Ajouter un Pokémon</a>
+        </div>
+    {% endif %}
+
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#index_fiche').DataTable({
+                "order": [ 0, "asc" ],
+                "language" : {"url":"//cdn.datatables.net/plug-ins/1.10.15/i18n/French.json"},
+                "columnDefs": [
+                    {"targets": [1,5,3], "searchable": false, "orderable": false}
+                ]
+            });
+        } );
+    </script>
+{% endblock %}

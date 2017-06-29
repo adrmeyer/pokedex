@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Pokedex{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <link rel="stylesheet" href="{{ asset('../bower_components/bootstrap/dist/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('../bower_components/datatables/media/css/dataTables.bootstrap.min.css') }}">
+    {#<link rel="stylesheet" href="{{ asset('../bower_components/materialize/dist/css/materialize.min.css') }}">#}
+    <link rel="stylesheet" href="{{ asset('bundles/pokedex/css/main.css') }}">
+    {% block stylesheets %}
+
+    {% endblock %}
+</head>
+<body>
+
+<div class="container">
+    <div id="header" class="jumbotron">
+        <h1>Mon Pokedex</h1>
+    </div>
+
+    {#<nav>
+        <div class="nav-wrapper">
+            <a href="" class="brand-logo">"Mon Pokedex"</a>
+        </div>
+    </nav>#}
+
+    <div class="row">
+        <div id="menu" class="col-md-3">
+            <h3></h3>
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                <li><a href="{{ path('fiche_index') }}">Pokedex</a></li>
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                {% else %}
+                    <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="col-md-9">
+            {% block body %}
+
+            {% endblock %}
+        </div>
+    </div>
+
+    <hr>
+
+    <footer>
+        <p>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</p>
+    </footer>
+</div>
+
+<script src="{{ asset('../bower_components/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('../bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('../bower_components/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('../bower_components/datatables/media/js/dataTables.bootstrap.min.js') }}"></script>
+{% block javascripts %}
+    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+{% endblock %}
+</body>
+</html>

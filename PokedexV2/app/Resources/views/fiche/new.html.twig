@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Fiche creation</h1>
+
+    <div class="row white-space"></div>
+
+    <div class="well">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Create" class="btn btn-primary"/>
+        {{ form_end(form) }}
+    </div>
+
+    <a href="{{ path('fiche_index') }}" class="btn btn-default">Back to the list</a>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $('select').select2();
+    </script>
+{% endblock %}

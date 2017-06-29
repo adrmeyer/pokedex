@@ -1,0 +1,24 @@
+{
+  "name": "pokedexv2",
+  "authors": [
+    "American <adrian.merey78500@kikoo.lol>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^3.3.7",
+    "datatables": "datatable#^1.10.15",
+    "bootstrap-sass": "^3.3.7",
+    "materialize": "^0.99.0"
+  }
+}

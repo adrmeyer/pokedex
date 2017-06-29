@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Fiche</h1>
+
+    <div class="row white-space"></div>
+
+    <div class="row">
+        <div class="col-md-5">
+            {% if fiche.image is not null %}<img src="{{ asset(fiche.image.webPath) }}" alt="{{ fiche.image.alt }}" height="300" width="300" />
+            {% endif %}
+        </div>
+
+        <div class="col-md-5">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Nationalid</th>
+                    <td>#{{ "%03d"| format(fiche.nationalID) }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ fiche.name }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ fiche.description }}</td>
+                </tr>
+                <tr>
+                    <th>Type(s)</th>
+                    <td>{% if fiche.types %}{{ fiche.types|join(', ') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Evolution Direct</th>
+                    <td>{% if fiche.evolution is not null %} <a href="{{ path('fiche_show', { 'id': fiche.evolution.id})  }}">{{ fiche.evolution.name }} </a>{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Evolution Indirect</th>
+                    <td>{% if fiche.evolution is not null %}{% if fiche.evolution.evolution is not null %} <a href="{{ path('fiche_show', { 'id': fiche.evolution.evolution.id})  }}">{{ fiche.evolution.evolution.name }} </a>{% endif %}{% endif %}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="btn-group">
+                <a href="{{ path('fiche_index') }}" class="btn btn-default"><span
+                            class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Retour</a>
+                {% if is_granted('ROLE_MODERATEUR') %}
+                <a href="{{ path('fiche_edit', { 'id': fiche.id }) }}" class="btn btn-default">Modifier</a>
+            </div>
+        </div>
+        <div class="col-md-2">
+            {{ form_start(delete_form) }}
+            <input class="btn btn-danger" type="submit" value="Supprimer">
+            {{ form_end(delete_form) }}
+        </div>
+        {% endif %}
+    </div>
+
+
+
+    </ul>
+{% endblock %}
